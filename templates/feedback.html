@@ -1,0 +1,168 @@
+{% extends 'layout.html' %}
+
+{% block title %}User Feedback{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #d3dce6, #a9b8d4);
+            font-family: 'Poppins', sans-serif;
+            color: #343a40;
+            padding: 20px;
+        }
+
+        .container-feedback {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #0056b3;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        .form-control:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+        }
+
+        .btn {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #004d99, #0056b3);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #002b5c, #004d99);
+            transform: scale(1.05);
+        }
+
+        .btn-warning {
+            background: linear-gradient(to right, #f39c12, #f1c40f);
+            color: white;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(to right, #e67e22, #f39c12);
+            transform: scale(1.05);
+        }
+
+        .message-container {
+            margin-top: 20px;
+        }
+
+        .list-group-item {
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-container ul {
+            padding-left: 0;
+        }
+
+        .reset-btn {
+            margin-top: 30px;
+        }
+    </style>
+
+    <div class="container-feedback">
+        <h1>User Feedback</h1>
+        <form method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}  <!-- Include CSRF token -->
+
+            <!-- Name -->
+            <div class="form-group">
+                <label for="name">Your Name (Optional):</label>
+                {{ form.name(class="form-control", id="name", placeholder="Enter your name (Optional)") }}
+            </div>
+
+            <!-- QA Feedback -->
+            <div class="form-group">
+                <label for="qa_feedback">Feedback on QA Feature:</label>
+                {{ form.qa_feedback(class="form-control", id="qa_feedback", rows="4", placeholder="Enter your feedback on the Question Answering feature...", required=True) }}
+            </div>
+
+            <div class="form-group">
+                <label for="qa_rating">Rating for QA Feature:</label>
+                {{ form.qa_rating(class="form-control", id="qa_rating", required=True) }}
+            </div>
+
+            <!-- Summarization Feedback -->
+            <div class="form-group">
+                <label for="summarization_feedback">Feedback on Text Summarization:</label>
+                {{ form.summarization_feedback(class="form-control", id="summarization_feedback", rows="4", placeholder="Enter your feedback on the Text Summarization feature...", required=True) }}
+            </div>
+
+            <div class="form-group">
+                <label for="summarization_rating">Rating for Text Summarization:</label>
+                {{ form.summarization_rating(class="form-control", id="summarization_rating", required=True) }}
+            </div>
+
+            <!-- Translation Feedback -->
+            <div class="form-group">
+                <label for="translation_feedback">Feedback on Translation:</label>
+                {{ form.translation_feedback(class="form-control", id="translation_feedback", rows="4", placeholder="Enter your feedback on the Translation feature...", required=True) }}
+            </div>
+
+            <div class="form-group">
+                <label for="translation_rating">Rating for Translation:</label>
+                {{ form.translation_rating(class="form-control", id="translation_rating", required=True) }}
+            </div>
+
+            <!-- Additional Comments -->
+            <div class="form-group">
+                <label for="additional_comments">Additional Comments (Optional):</label>
+                {{ form.additional_comments(class="form-control", id="additional_comments", rows="4", placeholder="Any additional comments?") }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+
+        <!-- Reset Button -->
+        <form method="post" class="reset-btn">
+            <button type="submit" class="btn btn-warning">Reset Feedback</button>
+        </form>
+
+        <div class="message-container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
