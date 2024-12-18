@@ -1,7 +1,7 @@
 from QA.qa_app import app_qa
 from Translation.translation_app import app_translation
 from Summarization.summary_app import app_summary
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash
 from Database.user import MyDB
 from forms import UserFeedbackForm
 
